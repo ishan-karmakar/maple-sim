@@ -4,7 +4,7 @@ plugins {
     id 'google-test'
     id("com.diffplug.spotless") version "7.0.0.BETA4"
     id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2025.0'
-    id 'edu.wpi.first.NativeUtils' version '2025.9.0'
+    id 'edu.wpi.first.NativeUtils' version '2026.0.1'
     id 'edu.wpi.first.GradleJni' version '1.1.0'
     id 'edu.wpi.first.GradleVsCode' version '2.1.0'
     id "edu.wpi.first.GradleRIO" version "2026.2.1"
@@ -69,6 +69,25 @@ javadoc {
     exclude 'org/json/simple/**'
     options {
         links "https://docs.oracle.com/en/java/javase/$javaVersion/docs/api/", 'https://github.wpilib.org/allwpilib/docs/release/java/'
+    }
+}
+
+model {
+    components {
+        MapleSim(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDirs 'src/main/native/cpp'
+                        include '**/*.cpp'
+                    }
+                    exportedHeaders {
+                        srcDirs 'src/main/native/include'
+                    }
+                }
+            }
+            nativeUtils.useRequiredLibrary(it, 'wpilib_shared')
+        }
     }
 }
 

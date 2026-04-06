@@ -34,6 +34,11 @@ model {
             targetPlatform nativeUtils.wpi.platforms.roborio
         }
     }
+    binaries {
+        withType(NativeBinarySpec).all {
+            nativeUtils.usePlatformArguments(it)
+        }
+    }
 }
 
 ext.appendDebugPathToBinaries = { binaries->
