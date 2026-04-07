@@ -46,7 +46,6 @@ class SimMotorConfigs {
     units::kilogram_square_meter_t loadMOI;
     units::newton_meter_t friction;
 
-   protected:
     units::radian_t forwardHardwareLimit{std::numeric_limits<double>::infinity()};
     units::radian_t reverseHardwareLimit{-std::numeric_limits<double>::infinity()};
 };
