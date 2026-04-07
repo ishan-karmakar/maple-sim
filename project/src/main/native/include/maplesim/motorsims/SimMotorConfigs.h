@@ -41,10 +41,10 @@ class SimMotorConfigs {
 
     constexpr units::volt_t NominalVoltage() const { return motor.nominalVoltage; }
 
-    frc::DCMotor motor;
-    double gearing;
-    units::kilogram_square_meter_t loadMOI;
-    units::newton_meter_t friction;
+    const frc::DCMotor motor;
+    const double gearing;
+    const units::kilogram_square_meter_t loadMOI;
+    const units::newton_meter_t friction;
 
     units::radian_t forwardHardwareLimit{std::numeric_limits<double>::infinity()};
     units::radian_t reverseHardwareLimit{-std::numeric_limits<double>::infinity()};

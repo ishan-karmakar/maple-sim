@@ -9,9 +9,6 @@ namespace maplesim {
 
 class SimMotorState {
    public:
-    units::radian_t mechanismAngularPosition;
-    units::radians_per_second_t mechanismAngularVelocity;
-
     constexpr SimMotorState(units::radian_t mechanismAngularPosition, units::radians_per_second_t mechanismAngularVelocity)
           : mechanismAngularPosition{mechanismAngularPosition}, mechanismAngularVelocity{mechanismAngularVelocity} {};
 
@@ -27,6 +24,9 @@ class SimMotorState {
 
         mechanismAngularPosition += mechanismAngularVelocity * dt;
     }
+
+    units::radian_t mechanismAngularPosition;
+    units::radians_per_second_t mechanismAngularVelocity;
 };
 
 }  // namespace maplesim

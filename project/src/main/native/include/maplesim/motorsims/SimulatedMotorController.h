@@ -59,7 +59,7 @@ class GenericMotorController : public SimulatedMotorController {
     constexpr units::volt_t GetAppliedVoltage() const { return appliedVoltage; }
 
    private:
-    frc::DCMotor model;
+    const frc::DCMotor model;
     units::ampere_t currentLimit = 150_A;
     units::radian_t forwardSoftwareLimit{std::numeric_limits<double>::infinity()};
     units::radian_t reverseSoftwareLimit{-std::numeric_limits<double>::infinity()};
