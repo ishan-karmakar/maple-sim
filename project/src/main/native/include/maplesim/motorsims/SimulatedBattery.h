@@ -18,7 +18,7 @@ class SimulatedBattery {
 
     static void SimulationSubTick();
 
-    static constexpr units::volt_t GetBatteryVoltage() { return batteryVoltage; }
+    static inline units::volt_t GetBatteryVoltage() { return batteryVoltage; }
 
     static inline units::ampere_t GetTotalCurrentDrawn() {
         units::ampere_t totalCurrent = 0_A;

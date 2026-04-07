@@ -29,7 +29,7 @@ class GenericMotorController : public SimulatedMotorController {
 
     constexpr units::volt_t ConstrainOutputVoltage(units::radian_t encoderAngle, units::radians_per_second_t encoderVelocity,
                                                    units::volt_t requestedVoltage) const {
-        units::ampere_t kCurrentThreshold = 1.2_A;
+        double kCurrentThreshold = 1.2;
 
         units::volt_t limitedVoltage = requestedVoltage;
         units::ampere_t currentAtRequestedVoltage = model.Current(encoderVelocity, requestedVoltage);

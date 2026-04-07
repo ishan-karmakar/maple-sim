@@ -8,32 +8,17 @@ namespace maplesim {
 
 class MapleMotorSim {
    public:
-    constexpr MapleMotorSim(SimMotorConfigs configs) : configs{configs} { SimulatedBattery::AddMotor(*this); }
+    inline MapleMotorSim(SimMotorConfigs configs) : configs{configs} { SimulatedBattery::AddMotor(*this); }
 
-    constexpr void Update(units::second_t dt) {
-        if (controller)
-            appliedVoltage = controller->UpdateControlSignal(state.mechanismAngularPosition, state.mechanismAngularVelocity,
-                                                             state.mechanismAngularPosition * configs.gearing,
-                                                             state.mechanismAngularVelocity * configs.gearing);
-        else
-            appliedVoltage = 0_V;
-        appliedVoltage = SimulatedBattery::Clamp(appliedVoltage);
-        statorCurrent = configs.CalculateCurrent(state.mechanismAngularVelocity, appliedVoltage);
-        state.Step(configs.CalculateTorque(statorCurrent), configs.friction, configs.loadMOI, dt);
-
-        if (state.mechanismAngularPosition < configs.reverseHardwareLimit)
-            state = {configs.reverseHardwareLimit, 0_rad_per_s};
-        else if (state.mechanismAngularPosition > configs.forwardHardwareLimit)
-            state = {configs.forwardHardwareLimit, 0_rad_per_s};
-    }
+    void Update(units::second_t dt);
 
     template <typename T>
     inline T& UseMotorController(std::unique_ptr<T> motorController) {
         controller = std::move(motorController);
-        return *controller;
+        return static_cast<T&>(*controller);
     }
 
-    constexpr GenericMotorController& UseSimpleDCMotorController() {
+    inline GenericMotorController& UseSimpleDCMotorController() {
         return UseMotorController(std::make_unique<GenericMotorController>(configs.motor));
     }
 
@@ -49,9 +34,7 @@ class MapleMotorSim {
 
     constexpr units::ampere_t GetStatorCurrent() const { return statorCurrent; }
 
-    constexpr units::ampere_t GetSupplyCurrent() const {
-        return GetStatorCurrent() * appliedVoltage / SimulatedBattery::GetBatteryVoltage();
-    }
+    inline units::ampere_t GetSupplyCurrent() const { return GetStatorCurrent() * appliedVoltage / SimulatedBattery::GetBatteryVoltage(); }
 
     constexpr SimMotorConfigs GetConfigs() const { return configs; }
 
