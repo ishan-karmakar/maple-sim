@@ -25,3 +25,10 @@ void SimulatedBattery::SimulationSubTick() {
     frc::SmartDashboard::PutNumber("BatterySim/TotalCurrent (Amps)", totalCurrent.value());
     frc::SmartDashboard::PutNumber("BatterySim/BatteryVoltage (Volts)", batteryVoltage.value());
 }
+
+units::ampere_t SimulatedBattery::GetTotalCurrentDrawn() {
+    units::ampere_t totalCurrent = 0_A;
+    for (auto& f : electricalAppliances)
+        totalCurrent += f();
+    return totalCurrent;
+}

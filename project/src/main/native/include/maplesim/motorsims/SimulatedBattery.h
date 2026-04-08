@@ -20,12 +20,7 @@ class SimulatedBattery {
 
     static inline units::volt_t GetBatteryVoltage() { return batteryVoltage; }
 
-    static inline units::ampere_t GetTotalCurrentDrawn() {
-        units::ampere_t totalCurrent = 0_A;
-        for (auto& f : electricalAppliances)
-            totalCurrent += f();
-        return totalCurrent;
-    }
+    static units::ampere_t GetTotalCurrentDrawn();
 
     static constexpr units::volt_t Clamp(units::volt_t voltage) { return std::clamp(voltage, -batteryVoltage, batteryVoltage); }
 

@@ -28,13 +28,13 @@ class GyroSimulation {
     private:
     frc::Rotation2d GetDriftingDueToImpact(units::radians_per_second_t actualAngularVelocity);
     frc::Rotation2d GetGyroDTheta(units::radians_per_second_t actualAngularVelocity);
-    frc::Rotation2d GetNoMotionDrifting();
+    frc::Rotation2d GetNoMotionDrifting() const;
 
     static constexpr units::radians_per_second_squared_t ANGULAR_ACCELERATION_THRESHOLD_START_DRIFTING = 500_rad_per_s_sq;
     static constexpr units::radian_t DRIFT_DUE_TO_IMPACT_COEFFICIENT = 1_deg;
 
-    const units::degree_t AVERAGE_DRIFTING_IN_30_SECS_MOTIONLESS;
-    const double VELOCITY_MEASUREMENT_STANDARD_DEVIATION_PERCENT;
+    units::degree_t AVERAGE_DRIFTING_IN_30_SECS_MOTIONLESS;
+    double VELOCITY_MEASUREMENT_STANDARD_DEVIATION_PERCENT;
 
     frc::Rotation2d gyroReading;
     units::radians_per_second_t measuredAngularVelocity;

@@ -19,13 +19,13 @@ GyroSimulation::GyroSimulation(units::degree_t AVERAGE_DRIFTING_IN_30_SECS_MOTIO
 
 void GyroSimulation::UpdateSimulationSubTick(units::radians_per_second_t actualAngularVelocity) {
     frc::Rotation2d driftingDueToImpact = GetDriftingDueToImpact(actualAngularVelocity);
-    gyroReading += driftingDueToImpact;
+    gyroReading = gyroReading + driftingDueToImpact;
 
     frc::Rotation2d dTheta = GetGyroDTheta(actualAngularVelocity);
-    gyroReading += dTheta;
+    gyroReading = gyroReading + dTheta;
 
     frc::Rotation2d noMotionDrifting = GetNoMotionDrifting();
-    gyroReading += noMotionDrifting;
+    gyroReading = gyroReading + noMotionDrifting;
 
     cachedRotations.push_back(gyroReading);
 }
@@ -47,4 +47,10 @@ frc::Rotation2d GyroSimulation::GetGyroDTheta(units::radians_per_second_t actual
     measuredAngularVelocity = units::radians_per_second_t{std::normal_distribution<double>(
         actualAngularVelocity.value(), VELOCITY_MEASUREMENT_STANDARD_DEVIATION_PERCENT * std::abs(actualAngularVelocity.value()))(gen)};
     return measuredAngularVelocity * SimulatedArena::GetSimulationDt();
+}
+
+frc::Rotation2d GyroSimulation::GetNoMotionDrifting() const {
+    units::degree_t AVERAGE_DRIFTING_1_PERIOD = AVERAGE_DRIFTING_IN_30_SECS_MOTIONLESS / 30_s * SimulatedArena::GetSimulationDt();
+    units::radian_t driftingInThisPeriod = units::degree_t{std::normal_distribution<double>(0, AVERAGE_DRIFTING_1_PERIOD.value())(gen)};
+    return driftingInThisPeriod;
 }

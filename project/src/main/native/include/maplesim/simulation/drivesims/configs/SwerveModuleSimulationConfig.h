@@ -38,10 +38,10 @@ class SwerveModuleSimulationConfig {
         return GetTheoreticalPropellingForcePerModule(robotMass, modulesCount, statorCurrentLimit) * modulesCount / robotMass;
     }
 
-    const SimMotorConfigs driveMotorConfigs, steerMotorConfigs;
-    const double DRIVE_GEAR_RATIO, STEER_GEAR_RATIO, WHEELS_COEFFICIENT_OF_FRICTION;
-    const units::volt_t DRIVE_FRICTION_VOLTAGE;
-    const units::meter_t WHEEL_RADIUS;
+    SimMotorConfigs driveMotorConfigs, steerMotorConfigs;
+    double DRIVE_GEAR_RATIO, STEER_GEAR_RATIO, WHEELS_COEFFICIENT_OF_FRICTION;
+    units::volt_t DRIVE_FRICTION_VOLTAGE;
+    units::meter_t WHEEL_RADIUS;
 };
 
 }  // namespace maplesim

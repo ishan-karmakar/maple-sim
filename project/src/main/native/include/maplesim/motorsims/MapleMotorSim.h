@@ -39,7 +39,7 @@ class MapleMotorSim {
     constexpr SimMotorConfigs GetConfigs() const { return configs; }
 
    private:
-    const SimMotorConfigs configs;
+    SimMotorConfigs configs;
 
     SimMotorState state{0_rad, 0_rad_per_s};
     std::unique_ptr<SimulatedMotorController> controller;
