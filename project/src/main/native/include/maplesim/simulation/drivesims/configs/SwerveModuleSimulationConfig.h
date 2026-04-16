@@ -9,17 +9,10 @@ class SwerveModuleSimulationConfig {
     constexpr SwerveModuleSimulationConfig(frc::DCMotor driveMotorModel, frc::DCMotor steerMotorModel, double driveGearRatio,
                                            double steerGearRatio, units::volt_t driveFrictionVoltage, units::volt_t steerFrictionVoltage,
                                            units::meter_t wheelRadius, units::kilogram_square_meter_t steerRotationalInertia,
-                                           double wheelsCoefficientOfFriction)
-          : driveMotorConfigs{driveMotorModel, driveGearRatio, 0_kg_sq_m, driveFrictionVoltage},
-            steerMotorConfigs{steerMotorModel, steerGearRatio, steerRotationalInertia, steerFrictionVoltage},
-            DRIVE_GEAR_RATIO{driveGearRatio},
-            STEER_GEAR_RATIO{steerGearRatio},
-            WHEELS_COEFFICIENT_OF_FRICTION{wheelsCoefficientOfFriction},
-            DRIVE_FRICTION_VOLTAGE{driveFrictionVoltage},
-            WHEEL_RADIUS{wheelRadius} {}
+                                           double wheelsCoefficientOfFriction);
 
-    constexpr units::newton_t GetGrippingForceNewtons(units::newton_t gravityForceOnModuleNewtons) {
-        return gravityForceOnModuleNewtons * WHEELS_COEFFICIENT_OF_FRICTION;
+    constexpr units::newton_t GetGrippingForce(units::newton_t gravityForceOnModule) {
+        return gravityForceOnModule * WHEELS_COEFFICIENT_OF_FRICTION;
     }
 
     constexpr units::meters_per_second_t MaximumGroundSpeed() {

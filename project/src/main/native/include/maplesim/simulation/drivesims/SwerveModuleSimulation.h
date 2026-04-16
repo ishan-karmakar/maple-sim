@@ -7,14 +7,12 @@
 namespace maplesim {
 
 class SwerveModuleSimulation {
-    public:
-    constexpr const SimMotorConfigs& GetDriveMotorConfigs() const {
-        return config.driveMotorConfigs;
-    }
+   public:
+    SwerveModuleSimulation(SwerveModuleSimulationConfig config);
 
-    constexpr const SimMotorConfigs& GetSteerMotorConfigs() const {
-        return config.steerMotorConfigs;
-    }
+    constexpr const SimMotorConfigs& GetDriveMotorConfigs() const { return config.driveMotorConfigs; }
+
+    constexpr const SimMotorConfigs& GetSteerMotorConfigs() const { return config.steerMotorConfigs; }
 
     template <typename T>
     inline T& UseDriveMotorController(std::unique_ptr<T> driveMotorController) {
@@ -31,13 +29,13 @@ class SwerveModuleSimulation {
         return steerMotorSim.UseMotorController(steerMotorController);
     }
 
-    inline GenericMotorController& UseGenericControllerForSteer() {
-        return steerMotorSim.UseSimpleDCMotorController();
-    }
+    inline GenericMotorController& UseGenericControllerForSteer() { return steerMotorSim.UseSimpleDCMotorController(); }
 
-    Eigen::Vector2d UpdateSimulationSubTickGetModuleForce(Eigen::Vector2d moduleCurrentGroundVelocityWorldRelative, frc::Rotation2d robotFacing, units::newton_t gravityForceOnModule);
+    Eigen::Vector2d UpdateSimulationSubTickGetModuleForce(Eigen::Vector2d moduleCurrentGroundVelocityWorldRelative,
+                                                          frc::Rotation2d robotFacing, units::newton_t gravityForceOnModule);
 
-    Eigen::Vector2d GetPropellingForce(units::newton_t grippingForce, frc::Rotation2d moduleWorldFacing, Eigen::Vector2d moduleCurrentGroundVelocity);
+    Eigen::Vector2d GetPropellingForce(units::newton_t grippingForce, frc::Rotation2d moduleWorldFacing,
+                                       Eigen::Vector2d moduleCurrentGroundVelocity);
 
     units::newton_meter_t GetDriveWheelTorque();
 
@@ -53,33 +51,21 @@ class SwerveModuleSimulation {
         return GetDriveMotorStatorCurrent() * driveMotorAppliedVoltage / SimulatedBattery::GetBatteryVoltage();
     }
 
-    constexpr units::ampere_t GetDriveMotorStatorCurrent() const {
-        return driveMotorStatorCurrent;
-    }
+    constexpr units::ampere_t GetDriveMotorStatorCurrent() const { return driveMotorStatorCurrent; }
 
-    inline units::ampere_t GetSteerMotorSupplyCurrent() const {
-        return steerMotorSim.GetSupplyCurrent();
-    }
+    inline units::ampere_t GetSteerMotorSupplyCurrent() const { return steerMotorSim.GetSupplyCurrent(); }
 
-    constexpr units::ampere_t GetSteerMotorStatorCurrent() const {
-        return steerMotorSim.GetStatorCurrent();
-    }
+    constexpr units::ampere_t GetSteerMotorStatorCurrent() const { return steerMotorSim.GetStatorCurrent(); }
 
-    constexpr units::radian_t GetDriveEncoderUnGearedPosition() const {
-        return GetDriveWheelFinalPosition() * config.DRIVE_GEAR_RATIO;
-    }
+    constexpr units::radian_t GetDriveEncoderUnGearedPosition() const { return GetDriveWheelFinalPosition() * config.DRIVE_GEAR_RATIO; }
 
-    constexpr units::radian_t GetDriveWheelFinalPosition() const {
-        return driveWheelFinalPosition;
-    }
+    constexpr units::radian_t GetDriveWheelFinalPosition() const { return driveWheelFinalPosition; }
 
     constexpr units::radians_per_second_t GetDriveEncoderUnGearedSpeed() const {
         return GetDriveWheelFinalSpeed() * config.DRIVE_GEAR_RATIO;
     }
 
-    constexpr units::radians_per_second_t GetDriveWheelFinalSpeed() const {
-        return driveWheelFinalSpeed;
-    }
+    constexpr units::radians_per_second_t GetDriveWheelFinalSpeed() const { return driveWheelFinalSpeed; }
 
     constexpr units::radian_t GetSteerRelativeEncoderPosition() const {
         return GetSteerAbsoluteFacing().Radians() * config.STEER_GEAR_RATIO + steerRelativeEncoderOffset;
@@ -89,17 +75,11 @@ class SwerveModuleSimulation {
         return GetSteerAbsoluteEncoderSpeed() * config.STEER_GEAR_RATIO;
     }
 
-    constexpr frc::Rotation2d GetSteerAbsoluteFacing() const {
-        return frc::Rotation2d{GetSteerAbsoluteAngle()};
-    }
+    constexpr frc::Rotation2d GetSteerAbsoluteFacing() const { return frc::Rotation2d{GetSteerAbsoluteAngle()}; }
 
-    constexpr units::radian_t GetSteerAbsoluteAngle() const {
-        return steerMotorSim.GetAngularPosition();
-    }
+    constexpr units::radian_t GetSteerAbsoluteAngle() const { return steerMotorSim.GetAngularPosition(); }
 
-    constexpr units::radians_per_second_t GetSteerAbsoluteEncoderSpeed() const {
-        return steerMotorSim.GetVelocity();
-    }
+    constexpr units::radians_per_second_t GetSteerAbsoluteEncoderSpeed() const { return steerMotorSim.GetVelocity(); }
 
     std::vector<units::radian_t> GetCachedDriveEncoderUnGearedPositions() const;
     inline std::vector<units::radian_t> GetCachedDriveWheelFinalPositions() const {
@@ -113,23 +93,27 @@ class SwerveModuleSimulation {
 
     SwerveModuleSimulationConfig config;
 
-    protected:
+   protected:
     constexpr frc::SwerveModuleState GetFreeSpinState() const {
         return frc::SwerveModuleState{
-            config.driveMotorConfigs.CalculateMechanismVelocity(config.driveMotorConfigs.CalculateCurrent(config.driveMotorConfigs.friction), driveMotorAppliedVoltage) * config.WHEEL_RADIUS / 1_rad, GetSteerAbsoluteFacing()};
+            config.driveMotorConfigs.CalculateMechanismVelocity(
+                config.driveMotorConfigs.CalculateCurrent(config.driveMotorConfigs.friction), driveMotorAppliedVoltage) *
+                config.WHEEL_RADIUS / 1_rad,
+            GetSteerAbsoluteFacing()};
     }
 
-    private:
+   private:
     void UpdateEncoderCaches();
 
-    MapleMotorSim steerMotorSim;
+    MapleMotorSim steerMotorSim{config.steerMotorConfigs};
 
     units::volt_t driveMotorAppliedVoltage;
     units::ampere_t driveMotorStatorCurrent;
     units::radian_t driveWheelFinalPosition;
     units::radians_per_second_t driveWheelFinalSpeed;
 
-    std::unique_ptr<SimulatedMotorController> driveMotorController;
+    std::unique_ptr<SimulatedMotorController> driveMotorController =
+        std::make_unique<GenericMotorController>(config.driveMotorConfigs.motor);
 
     // TODO: Make random
     units::radian_t steerRelativeEncoderOffset = 0_rad;
@@ -137,4 +121,4 @@ class SwerveModuleSimulation {
     std::deque<frc::Rotation2d> steerAbsolutePositionCache;
 };
 
-}
+}  // namespace maplesim

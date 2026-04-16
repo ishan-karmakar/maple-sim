@@ -8,24 +8,20 @@
 namespace maplesim {
 
 class GyroSimulation {
-    public:
+   public:
     GyroSimulation(units::degree_t AVERAGE_DRIFTING_IN_30_SECS_MOTIONLESS, double VELOCITY_MEASUREMENT_STANDARD_DEVIATION_PERCENT);
 
-    constexpr void SetRotation(frc::Rotation2d currentRotation) {
-        gyroReading = currentRotation;
-    }
+    constexpr void SetRotation(frc::Rotation2d currentRotation) { gyroReading = currentRotation; }
 
     constexpr frc::Rotation2d GetGyroReading() const { return gyroReading; }
 
-    constexpr units::radians_per_second_t GetMeasuredAngularVelocity() const {
-        return measuredAngularVelocity;
-    }
+    constexpr units::radians_per_second_t GetMeasuredAngularVelocity() const { return measuredAngularVelocity; }
 
     std::vector<frc::Rotation2d> GetCachedGyroReadings() const;
 
     void UpdateSimulationSubTick(units::radians_per_second_t actualAngularVelocity);
 
-    private:
+   private:
     frc::Rotation2d GetDriftingDueToImpact(units::radians_per_second_t actualAngularVelocity);
     frc::Rotation2d GetGyroDTheta(units::radians_per_second_t actualAngularVelocity);
     frc::Rotation2d GetNoMotionDrifting() const;
@@ -45,4 +41,4 @@ class GyroSimulation {
     static std::mt19937 gen;
 };
 
-}
+}  // namespace maplesim
