@@ -4,12 +4,11 @@
 
 using namespace maplesim;
 
-constexpr SwerveModuleSimulationConfig::SwerveModuleSimulationConfig(frc::DCMotor driveMotorModel, frc::DCMotor steerMotorModel,
-                                                                     double driveGearRatio, double steerGearRatio,
-                                                                     units::volt_t driveFrictionVoltage, units::volt_t steerFrictionVoltage,
-                                                                     units::meter_t wheelRadius,
-                                                                     units::kilogram_square_meter_t steerRotationalInertia,
-                                                                     double wheelsCoefficientOfFriction)
+SwerveModuleSimulationConfig::SwerveModuleSimulationConfig(frc::DCMotor driveMotorModel, frc::DCMotor steerMotorModel,
+                                                           double driveGearRatio, double steerGearRatio, units::volt_t driveFrictionVoltage,
+                                                           units::volt_t steerFrictionVoltage, units::meter_t wheelRadius,
+                                                           units::kilogram_square_meter_t steerRotationalInertia,
+                                                           double wheelsCoefficientOfFriction)
       : driveMotorConfigs{driveMotorModel, driveGearRatio, 0_kg_sq_m, driveFrictionVoltage},
         steerMotorConfigs{steerMotorModel, steerGearRatio, steerRotationalInertia, steerFrictionVoltage},
         DRIVE_GEAR_RATIO{driveGearRatio},
