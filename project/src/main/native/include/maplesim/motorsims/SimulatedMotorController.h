@@ -27,6 +27,21 @@ class GenericMotorController : public SimulatedMotorController {
 
     constexpr void RequestVoltage(units::volt_t voltage) { requestedVoltage = voltage; }
 
+    /**
+     *
+     *
+     * <h2>(Utility Function) Constrains the Output Voltage of a Motor.</h2>
+     *
+     * <p>Constrains the output voltage of a motor such that the <strong>stator</strong> current does not exceed the
+     * current limit
+     *
+     * <p>Prevents motor from exceeding software limits
+     *
+     * @param encoderAngle the angle of the encoder
+     * @param encoderVelocity the velocity of the encoder
+     * @param requestedVoltage the requested voltage
+     * @return the constrained voltage that satisfied the limits
+     */
     constexpr units::volt_t ConstrainOutputVoltage(units::radian_t encoderAngle, units::radians_per_second_t encoderVelocity,
                                                    units::volt_t requestedVoltage) const {
         double kCurrentThreshold = 1.2;
