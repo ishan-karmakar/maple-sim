@@ -30,7 +30,7 @@ class SwerveModuleSimulationConfig {
                                  units::volt_t driveFrictionVoltage, units::volt_t steerFrictionVoltage, units::meter_t wheelRadius,
                                  units::kilogram_square_meter_t steerRotationalInertia, double wheelsCoefficientOfFriction);
 
-    constexpr units::newton_t GetGrippingForce(units::newton_t gravityForceOnModule) {
+    constexpr units::newton_t GetGrippingForce(units::newton_t gravityForceOnModule) const {
         return gravityForceOnModule * WHEELS_COEFFICIENT_OF_FRICTION;
     }
 
@@ -41,7 +41,7 @@ class SwerveModuleSimulationConfig {
      *
      * @return the theoretical maximum ground speed that the module can achieve, in m/s
      */
-    constexpr units::meters_per_second_t MaximumGroundSpeed() {
+    constexpr units::meters_per_second_t MaximumGroundSpeed() const {
         return driveMotorConfigs.FreeSpinMechanismVelocity() * WHEEL_RADIUS / 1_tr;
     }
 
@@ -58,7 +58,7 @@ class SwerveModuleSimulationConfig {
      * @return the maximum propelling force of EACH module
      */
     constexpr units::newton_t GetTheoreticalPropellingForcePerModule(units::kilogram_t robotMass, int modulesCount,
-                                                                     units::ampere_t statorCurrentLimit) {
+                                                                     units::ampere_t statorCurrentLimit) const {
         units::newton_t maxThrustNewtons = driveMotorConfigs.CalculateTorque(statorCurrentLimit) / WHEEL_RADIUS;
         units::newton_t maxGrippingNewtons = 9.8_mps_sq * robotMass / modulesCount * WHEELS_COEFFICIENT_OF_FRICTION;
         return units::math::min(maxThrustNewtons, maxGrippingNewtons);
@@ -76,7 +76,7 @@ class SwerveModuleSimulationConfig {
      * @param modulesCount the amount of modules on the robot, assumed to be sharing the gravity force equally
      */
     constexpr units::meters_per_second_squared_t MaxAcceleration(units::kilogram_t robotMass, int modulesCount,
-                                                                 units::ampere_t statorCurrentLimit) {
+                                                                 units::ampere_t statorCurrentLimit) const {
         return GetTheoreticalPropellingForcePerModule(robotMass, modulesCount, statorCurrentLimit) * modulesCount / robotMass;
     }
 

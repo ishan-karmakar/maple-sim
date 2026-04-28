@@ -119,10 +119,11 @@ class AbstractDriveTrainSimulation {
    protected:
     AbstractDriveTrainSimulation(const DriveTrainSimulationConfig& config, const frc::Pose2d& initialPose);
 
+    std::unique_ptr<btRigidBody> body;
+
    private:
     std::unique_ptr<btCollisionShape> shape;
     std::unique_ptr<btDefaultMotionState> motionState;
-    std::unique_ptr<btRigidBody> body;
 };
 
 }  // namespace maplesim

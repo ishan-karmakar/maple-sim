@@ -354,9 +354,6 @@ class SwerveModuleSimulation {
         return std::vector<frc::Rotation2d>{steerAbsolutePositionCache.begin(), steerAbsolutePositionCache.end()};
     }
 
-    SwerveModuleSimulationConfig config;
-
-   protected:
     /**
      *
      *
@@ -374,6 +371,8 @@ class SwerveModuleSimulation {
                 config.WHEEL_RADIUS / 1_rad,
             GetSteerAbsoluteFacing()};
     }
+
+    SwerveModuleSimulationConfig config;
 
    private:
     /**

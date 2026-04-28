@@ -87,9 +87,9 @@ class SimulatedArena {
      */
     static inline void OverrideInstance(SimulatedArena&& newInstance) { GetInstance() = std::move(newInstance); }
 
-    static inline int GetSimulationSubTicksIn1Period() { return SIMULATION_SUB_TICKS_IN_1_PERIOD; }
+    static constexpr int GetSimulationSubTicksIn1Period() { return SIMULATION_SUB_TICKS_IN_1_PERIOD; }
 
-    static inline units::second_t GetSimulationDt() { return SIMULATION_DT; }
+    static constexpr units::second_t GetSimulationDt() { return SIMULATION_DT; }
 
     /**
      *
