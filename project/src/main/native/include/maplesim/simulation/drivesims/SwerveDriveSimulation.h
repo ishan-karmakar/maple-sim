@@ -124,6 +124,19 @@ class SwerveDriveSimulation : AbstractDriveTrainSimulation {
      */
     inline units::radians_per_second_t MaxAngularVelocity() const { return MaxLinearVelocity() / config.DriveBaseRadius() * 1_rad; }
 
+    /**
+     *
+     *
+     * <h2>Obtains the maximum achievable angular acceleration of the chassis.</h2>
+     *
+     * @return the maximum angular acceleration
+     */
+    units::radians_per_second_squared_t MaxAngularAcceleration(units::ampere_t statorCurrentLimit) const;
+
+    std::vector<SwerveModuleSimulation>& GetModules() { return moduleSimulations; }
+
+    GyroSimulation& GetGyroSimulation() { return gyroSimulation; }
+
    protected:
     GyroSimulation gyroSimulation;
     std::vector<frc::Translation2d> moduleTranslations;
