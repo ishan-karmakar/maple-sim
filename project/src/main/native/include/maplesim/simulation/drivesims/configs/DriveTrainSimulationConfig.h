@@ -60,9 +60,9 @@ class DriveTrainSimulationConfig {
      *
      * @return a new instance of {@link DriveTrainSimulationConfig} with all configs set to default values.
      */
-    inline static DriveTrainSimulationConfig Default() {
-        return {45_kg, 0.76_m, 0.76_m, 0.52_m, 0.52_m, COTS::OfPigeon2(), COTS::OfMark4(frc::DCMotor::Falcon500())};
-    }
+    // inline static DriveTrainSimulationConfig Default() {
+    //     return {45_kg, 0.76_m, 0.76_m, 0.52_m, 0.52_m, COTS::OfPigeon2(), COTS::OfMark4(frc::DCMotor::Falcon500())};
+    // }
 
     /**
      *

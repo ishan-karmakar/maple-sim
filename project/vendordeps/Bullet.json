@@ -1,0 +1,167 @@
+{
+    "fileName": "Bullet.json",
+    "name": "Bullet",
+    "version": "0.0.1",
+    "frcYear": "2026",
+    "uuid": "8862543b-dacc-4f96-a283-b097cc836c39",
+    "mavenUrls": ["https://git.valor6800.com/api/v4/projects/34/packages/maven"],
+    "jsonUrl": "InsertSomeUrlHere",
+    "cppDependencies": [
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet2FileLoader",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet3Collision",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet3Common",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet3Dynamics",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet3Geometry",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "Bullet3OpenCL_clew",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "BulletCollision",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "BulletDynamics",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "BulletInverseDynamics",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "BulletSoftBody",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        },
+        {
+            "groupId": "org.valor6800",
+            "artifactId": "Bullet-cpp",
+            "version": "0.0.1",
+            "libName": "LinearMath",
+            "headerClassifier": "headers",
+            "sharedLibrary": false,
+            "skipInvalidPlatforms": true,
+            "binaryPlatforms": [
+                "windowsx86-64",
+                "linuxx86-64",
+                "osxuniversal"
+            ]
+        }
+    ],
+    "jniDependencies": [],
+    "javaDependencies": []
+}

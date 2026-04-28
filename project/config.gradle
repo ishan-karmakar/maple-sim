@@ -31,12 +31,15 @@ model {
     // Uncomment this, and remove lines below it to enable builds for just roborio
     components {
         all {
-            targetPlatform nativeUtils.wpi.platforms.roborio
+            targetPlatform nativeUtils.wpi.platforms.windowsx64
+            // targetPlatform nativeUtils.wpi.platforms.roborio
         }
     }
     binaries {
         withType(NativeBinarySpec).all {
             nativeUtils.usePlatformArguments(it)
+            nativeUtils.wpi.getVendorDeps().getNativeVendor().cpp(it)
+            cppCompiler.args << "-DBT_USE_DOUBLE_PRECISION"
         }
     }
 }

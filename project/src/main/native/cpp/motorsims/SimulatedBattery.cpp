@@ -3,12 +3,17 @@
 #include <frc/Errors.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "maplesim/motorsims/SimulatedBattery.h"
+#include "maplesim/motorsims/MapleMotorSim.h"
 
 using namespace maplesim;
 
 frc::LinearFilter<units::ampere_t> SimulatedBattery::currentFilter = frc::LinearFilter<units::ampere_t>::MovingAverage(50);
 std::vector<std::function<units::ampere_t(void)>> SimulatedBattery::electricalAppliances;
 units::volt_t SimulatedBattery::batteryVoltage = SimulatedBattery::BATTERY_NOMINAL_VOLTAGE;
+
+void SimulatedBattery::AddMotor(MapleMotorSim& motorSim) {
+    AddElectricalAppliances([&] { return motorSim.GetSupplyCurrent(); });
+}
 
 void SimulatedBattery::SimulationSubTick() {
     units::ampere_t totalCurrent = currentFilter.Calculate(GetTotalCurrentDrawn());

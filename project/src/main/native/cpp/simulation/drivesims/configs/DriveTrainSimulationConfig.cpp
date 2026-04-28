@@ -82,6 +82,11 @@ void DriveTrainSimulationConfig::CheckRobotMass() const {
     BoundingCheck::Check(bumperWidthY, 0.2_m, 1.5_m, "bumper width", "meters");
 }
 
+void DriveTrainSimulationConfig::CheckBumperSize() const {
+    BoundingCheck::Check(bumperLengthX, 0.2_m, 1.5_m, "bumper length", "meters");
+    BoundingCheck::Check(bumperWidthY, 0.2_m, 1.5_m, "bumper width", "meters");
+}
+
 void DriveTrainSimulationConfig::CheckModuleTranslations() const {
     for (size_t i = 0; i < moduleTranslations.size(); i++)
         BoundingCheck::Check(moduleTranslations[i].Norm(), 0.2_m, 1.2_m, "module number " + std::to_string(i) + " translation magnitude",

@@ -1,9 +1,12 @@
 #include <frc/RobotBase.h>
+#include <frc/TimedRobot.h>
 #include "maplesim/simulation/SimulatedArena.h"
 
 using namespace maplesim;
 
 bool SimulatedArena::ALLOW_CREATION_ON_REAL_ROBOT = false;
+int SimulatedArena::SIMULATION_SUB_TICKS_IN_1_PERIOD = 5;
+units::second_t SimulatedArena::SIMULATION_DT = frc::TimedRobot::kDefaultPeriod / SimulatedArena::SIMULATION_SUB_TICKS_IN_1_PERIOD;
 
 nt::BooleanPublisher SimulatedArena::resetFieldPublisher =
     nt::NetworkTableInstance::GetDefault().GetTable("SmartDashboard/MapleSim/MatchData")->GetBooleanTopic("Reset Field").Publish();
