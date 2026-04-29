@@ -1,5 +1,6 @@
 #pragma once
 #include <frc/kinematics/SwerveDriveKinematics.h>
+#include <ctre/phoenix6/swerve/impl/SwerveDriveKinematics.hpp>
 #include "maplesim/simulation/drivesims/AbstractDriveTrainSimulation.h"
 
 namespace maplesim {
@@ -51,7 +52,7 @@ namespace maplesim {
  * href="https://docs.photonvision.org/en/latest/docs/simulation/simulation-java.html#updating-the-simulation-world">PhotonVision
  * simulation</a> to simulate vision.
  */
-class SwerveDriveSimulation : AbstractDriveTrainSimulation {
+class SwerveDriveSimulation : public AbstractDriveTrainSimulation {
    public:
     /**
      *
@@ -135,12 +136,12 @@ class SwerveDriveSimulation : AbstractDriveTrainSimulation {
 
     std::vector<SwerveModuleSimulation>& GetModules() { return moduleSimulations; }
 
-    GyroSimulation& GetGyroSimulation() { return gyroSimulation; }
+    constexpr GyroSimulation& GetGyroSimulation() { return gyroSimulation; }
 
    protected:
     GyroSimulation gyroSimulation;
     std::vector<frc::Translation2d> moduleTranslations;
-    frc::SwerveDriveKinematics<4> kinematics;
+    ctre::phoenix6::swerve::impl::SwerveDriveKinematics kinematics;
 
    private:
     /**

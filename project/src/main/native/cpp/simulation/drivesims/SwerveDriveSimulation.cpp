@@ -9,7 +9,7 @@ SwerveDriveSimulation::SwerveDriveSimulation(const DriveTrainSimulationConfig& c
       : AbstractDriveTrainSimulation{config, initialPose},
         gyroSimulation{config.gyroSimulationFactory()},
         moduleTranslations{config.moduleTranslations},
-        kinematics{moduleTranslations[0], moduleTranslations[1], moduleTranslations[2], moduleTranslations[3]},
+        kinematics{moduleTranslations},
         gravityForceOnEachModule{config.robotMass * 1_SG / moduleTranslations.size()} {
     for (const auto& factory : config.swerveModuleSimulationFactories)
         moduleSimulations.push_back(factory());
@@ -107,15 +107,15 @@ void SwerveDriveSimulation::SimulateModulePropellingForces() {
 }
 
 frc::ChassisSpeeds SwerveDriveSimulation::GetDesiredSpeeds() const {
-    std::array<frc::SwerveModuleState, 4> states;
-    for (int i = 0; i < 4; i++)
-        states[i] = moduleSimulations[i].GetFreeSpinState();
+    std::vector<frc::SwerveModuleState> states;
+    for (const auto& sim : moduleSimulations)
+        states.push_back(sim.GetFreeSpinState());
     return kinematics.ToChassisSpeeds(states);
 }
 
 frc::ChassisSpeeds SwerveDriveSimulation::GetModuleSpeeds() const {
-    std::array<frc::SwerveModuleState, 4> states;
-    for (int i = 0; i < 4; i++)
-        states[i] = moduleSimulations[i].GetCurrentState();
+    std::vector<frc::SwerveModuleState> states;
+    for (const auto& sim : moduleSimulations)
+        states.push_back(sim.GetCurrentState());
     return kinematics.ToChassisSpeeds(states);
 }
