@@ -62,6 +62,8 @@ class GamePieceOnFieldSimulation : GamePiece {
     GamePieceOnFieldSimulation(const GamePieceInfo& info, std::function<units::meter_t()> zPositionSupplier, const frc::Pose2d& initialPose,
                                const Eigen::Vector2d& initialVelocity);
 
+    ~GamePieceOnFieldSimulation();
+
     /**
      *
      *

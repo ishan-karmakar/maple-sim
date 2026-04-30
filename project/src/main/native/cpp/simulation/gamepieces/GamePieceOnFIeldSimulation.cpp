@@ -37,6 +37,8 @@ GamePieceOnFieldSimulation::GamePieceOnFieldSimulation(const GamePieceInfo& info
         rigidBody->setLinearVelocity({initialVelocity.x(), initialVelocity.y(), 0});
 }
 
+GamePieceOnFieldSimulation::~GamePieceOnFieldSimulation() = default;
+
 void GamePieceOnFieldSimulation::SetVelocity(frc::ChassisSpeeds speeds) {
     rigidBody->setLinearVelocity({speeds.vx.value(), speeds.vy.value(), 0});
     rigidBody->setAngularVelocity({0, 0, speeds.omega.value()});
