@@ -1,10 +1,19 @@
 #pragma once
 #include <unordered_map>
+#include <unordered_set>
 #include <networktables/DoubleTopic.h>
 #include <networktables/BooleanTopic.h>
 #include <networktables/NetworkTableInstance.h>
 #include <frc/Timer.h>
 #include <frc/DriverStation.h>
+#include "maplesim/simulation/drivesims/AbstractDriveTrainSimulation.h"
+#include "maplesim/simulation/gamepieces/GamePieceProjectile.h"
+
+class btDiscreteDynamicsWorld;
+class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
+class btBroadphaseInterface;
+class btSequentialImpulseConstraintSolver;
 
 namespace maplesim {
 
@@ -58,6 +67,31 @@ class SimulatedArena {
          * @param subTickNum the number of this sub-tick (counting from 0 in each robot period)
          */
         virtual void SimulationSubTick(int subTickNum) = 0;
+    };
+
+    /**
+     *
+     *
+     * <h1>Represents an Abstract Field Map</h1>
+     *
+     * <p>Stores the layout of obstacles and game pieces.
+     *
+     * <p>For each season-specific subclass of {@link SimulatedArena}, there should be a corresponding subclass of this
+     * class to store the field map for that specific season's game.
+     */
+    class FieldMap {
+       public:
+        ~FieldMap();
+
+        std::vector<std::unique_ptr<btRigidBody>> obstacles;
+
+       protected:
+        void AddBorderLine(const frc::Translation2d& startingPoint, const frc::Translation2d& endingPoint);
+        void AddRectangularObstacle(units::meter_t width, units::meter_t height, const frc::Pose2d& absolutePositionOnField);
+        void AddCustomObstacle(btCollisionShape* shape, const frc::Pose2d& absolutePositionOnField);
+
+       private:
+        static std::unique_ptr<btRigidBody> CreateObstacle(btCollisionShape* shape);
     };
 
     /**
@@ -210,6 +244,34 @@ class SimulatedArena {
      */
     void AddValueToMatchBreakdown(bool isBlueTeam, std::string valueKey, double toAdd);
 
+    /**
+     *
+     *
+     * <h2>Registers a {@link GamePieceProjectile} to the Simulation and Launches It.</h2>
+     *
+     * <p>Calls to {@link GamePieceProjectile#launch()}, which will launch the game piece immediately.
+     *
+     * @param gamePieceProjectile the projectile to be registered and launched in the simulation
+     */
+    inline void AddGamePieceProjectile(std::unique_ptr<GamePieceProjectile> gamePieceProjectile) {
+        gamePieceProjectile->Launch();
+        gamePieces.emplace(gamePieceProjectile);
+    }
+
+    /**
+     *
+     *
+     * <h2>Removes a {@link GamePieceOnFieldSimulation} from the Simulation.</h2>
+     *
+     * <p>Removes the game piece from the physics world and the simulation's game piece collection.
+     *
+     * @param gamePiece the game piece to be removed from the simulation
+     * @return <code>true</code> if this set contained the specified element
+     */
+    bool RemoveGamePiece(std::shared_ptr<GamePieceOnFieldSimulation> gamePiece) {
+        physicsWorld->removeRigidBody(gamePiece.get());
+    }
+
     /** Whether to allow the simulation to run a real robot This feature is HIGHLY RECOMMENDED to be turned OFF */
     static bool ALLOW_CREATION_ON_REAL_ROBOT;
 
@@ -232,6 +294,19 @@ class SimulatedArena {
     /**
      *
      *
+     * <h2>Constructs a new simulation arena with the specified field map of obstacles.</h2>
+     *
+     * <p>This constructor initializes a physics world with zero gravity and adds the provided obstacles to the world.
+     *
+     * <p>It also sets up the collections for drivetrain simulations, game pieces, projectiles, and intake simulations.
+     *
+     * @param obstaclesMap the season-specific field map containing the layout of obstacles for the simulation
+     */
+    SimulatedArena(FieldMap obstaclesMap);
+
+    /**
+     *
+     *
      * <h2>Publishes the match breakdown data to network tables</h2>
      */
     void PublishBreakdown();
@@ -243,6 +318,10 @@ class SimulatedArena {
     std::unordered_map<std::string, nt::DoublePublisher> redPublishers;
     std::unordered_map<std::string, nt::DoublePublisher> bluePublishers;
 
+    std::unique_ptr<btDiscreteDynamicsWorld> physicsWorld;
+    std::unordered_set<std::unique_ptr<AbstractDriveTrainSimulation>> driveTrainSimulations;
+
+    std::unordered_set<std::unique_ptr<GamePiece>> gamePieces;
     std::vector<std::unique_ptr<Simulatable>> customSimulations;
 
    private:
@@ -252,6 +331,13 @@ class SimulatedArena {
     static units::second_t SIMULATION_DT;
 
     bool shouldPublishMatchBreakdown = true;
+
+    std::unique_ptr<btDefaultCollisionConfiguration> collisionConfiguration;
+    std::unique_ptr<btCollisionDispatcher> collisionDispatcher;
+    std::unique_ptr<btBroadphaseInterface> broadphase;
+    std::unique_ptr<btSequentialImpulseConstraintSolver> constraintSolver;
+
+    // Intake simulations
 };
 
 }  // namespace maplesim

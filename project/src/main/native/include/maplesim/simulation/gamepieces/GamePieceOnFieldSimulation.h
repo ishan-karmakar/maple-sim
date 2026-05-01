@@ -27,7 +27,7 @@ class GamePieceOnFieldSimulation : GamePiece {
    public:
     struct GamePieceInfo {
         std::string type;
-        std::shared_ptr<btCollisionShape> shape;
+        std::unique_ptr<btCollisionShape> shape;
         units::meter_t gamePieceHeight;
         units::kilogram_t gamePieceMass;
         double linearDamping;
@@ -47,7 +47,7 @@ class GamePieceOnFieldSimulation : GamePiece {
      * @param initialPose the initial position of the game piece on the field
      */
     inline GamePieceOnFieldSimulation(const GamePieceInfo& info, const frc::Pose2d& initialPose)
-          : GamePieceOnFieldSimulation{info, [=] { return info.gamePieceHeight / 2; }, initialPose, {}} {}
+          : GamePieceOnFieldSimulation{info, [height = info.gamePieceHeight] { return height / 2; }, initialPose, {}} {}
 
     /**
      *
@@ -128,7 +128,7 @@ class GamePieceOnFieldSimulation : GamePiece {
     std::string type;
 
     std::unique_ptr<btRigidBody> rigidBody;
-    std::shared_ptr<btCollisionShape> collisionShape;
+    std::unique_ptr<btCollisionShape> collisionShape;
     std::unique_ptr<btCompoundShape> compoundShape;
     std::unique_ptr<btDefaultMotionState> motionState;
 };
